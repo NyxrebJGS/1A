@@ -1,0 +1,176 @@
+body{
+	--def: #036f7b; 	
+	--inv: #fff;
+	width: 99%;
+  	height: 100vh;
+	background: linear-gradient(black,white);
+}
+
+h1,h2{
+	color: white;
+	font-size: 1.4rem;
+	font-family: Courier New;
+	text-align: center;
+}
+
+img{
+	margin:auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+fieldset {
+    border-color: rgb(3, 3, 126);
+}
+
+legend {
+    color: rgb(3, 3, 126);
+    text-align: center;
+}
+
+form{
+	
+	flex-direction: column;
+	background-color: rgba(250,250,250,0.9);
+	border-radius: 10px;
+	border: 3px solid rgba(5,5,5,0.8);
+	letter-spacing: 0.5pt;
+	color:royalblue;
+	align-items: center;
+	padding:0.5%;
+}
+
+aside{
+	display: inline-block;
+	width:40%;
+	
+}
+
+#Formulaire{
+	margin-left:2%;
+	margin-right: 2%;
+}
+
+#menu{
+	color: white;
+	font-size: 1.4rem;
+	font-family: Courier New;
+	text-align: center;
+}
+
+.aside1{
+	display: inline-block;
+	width:50%;
+
+}
+
+.aside_center{
+	margin: auto;
+	margin-top: 1%; 
+	text-align: center;
+
+}
+
+.bouton2 {
+    border-radius: 50px;
+	text-align: center;
+	font-style: italic;
+	letter-spacing: 0.5pt;
+}
+
+.bouton2:hover{
+	background-color: green;
+}
+
+.bouton_carrou{
+	color:white;
+}
+
+.bouton_carrou:hover{
+	cursor: pointer;
+	color:royalblue;
+}
+
+.subtitle{
+	font-style: italic;
+}
+
+.logo{
+	text-align: end;
+	align-self: flex-end;
+}
+
+.cartes{
+	margin-left:3%;
+}
+
+.bouton {		
+	position: relative;	
+	padding: 1.4rem 4.2rem;
+	font-size: 1.4rem;
+	font-family: Courier New;
+	color: var(--inv);
+	text-transform: uppercase;
+	transition: all 500ms cubic-bezier(0.77, 0, 0.175, 1);	
+	cursor: pointer;
+	user-select: none;
+}
+
+.bouton:before, .bouton:after {
+	content: '';
+	position: absolute;	
+	transition: inherit;
+	z-index: -1;
+}
+
+.bouton:hover {
+	color: var(--def);
+	transition-delay: .5s;
+}
+
+.bouton:hover:before {
+	transition-delay: 0s;
+}
+
+.bouton:hover:after {
+	background: var(--inv);
+	transition-delay: .35s;
+}
+
+
+
+/* From center */
+
+.from-center:before {
+	top: 0;
+	left: 50%;
+	height: 100%;
+	width: 0;
+	border: 1px solid var(--inv);
+	border-left: 0;
+	border-right: 0;
+}
+
+.from-center:after {
+	bottom: 0;
+	left: 0;
+	height: 0;
+	width: 100%;
+	background: var(--inv);
+}
+
+.from-center:hover:before {
+	left: 0;
+	width: 100%;
+}
+
+.from-center:hover:after {
+	top: 0;
+	height: 100%;
+}
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
