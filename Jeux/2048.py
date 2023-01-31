@@ -1,36 +1,24 @@
-from pynput import keyboard
+from pynput.keyboard import Key, Listener
 import numpy as np
 import random as rd
-
-def on_press(key):
-    try:
-        print('alphanumeric key {0} pressed'.format(
-            key.char))
-    except AttributeError:
-        print('special key {0} pressed'.format(
-            key))
-
-def on_release(key):
-    print('{0} released'.format(
-        key))
-    if key == keyboard.Key.esc:
-        # Stop listener
-        return False
 
 def inittab():
     grille=[]
     for i in range (0,4):
         grille.append(['*','*','*','*'])
-    liste_chiffrededepart=[2,4]
-    for i in range (0,2):
-        premierchiffre=rd.randint(0,3)
-        secondchiffre=rd.randint(0,3)
-        while grille[premierchiffre][secondchiffre]!='*':
-            premierchiffre=rd.randint(0,3)
-            secondchiffre=rd.randint(0,3)
-        grille[premierchiffre][secondchiffre]=rd.choice(liste_chiffrededepart)
+    remplir(grille)
+    remplir(grille)
     return grille
 
+def remplir(grille):
+    liste_chiffrededepart=[2,4]
+    premierchiffre=rd.randint(0,3)
+    secondchiffre=rd.randint(0,3)
+    while grille[premierchiffre][secondchiffre]!='*':
+        premierchiffre=rd.randint(0,3)
+        secondchiffre=rd.randint(0,3)
+    grille[premierchiffre][secondchiffre]=rd.choice(liste_chiffrededepart)
+    return grille
 
 def affichertab(grille):
     for i in range(len(grille)):
@@ -38,14 +26,24 @@ def affichertab(grille):
             print(grille[i][j],end='\t')
         print('\n')
 
+
+def on_press(key):
+    print('{0} pressed'.format(
+        key))
+
+def on_release(key):
+    print('{0} release'.format(
+        key))
+    if key == Key.down:
+        # Stop listener
+        return False
+
 def deplacement(grille):
-    mouv=keyboard.Key.esc
-    with keyboard.Events() as events:
-        for event in events:
-            if event.key == keyboard.Key.up or event.key == keyboard.Key.down or event.key == keyboard.Key.left or event.key == keyboard.Key.right:
-                mouv=event.key
-                break
-    if mouv==keyboard.Key.down:
+    flag=True
+    with Listener(
+            on_release=on_release) as listener:
+        listener.join()
+    if True:
         for i in range(len(grille)):
             for j in range(len(grille[i])):
                 flag=True
@@ -56,15 +54,35 @@ def deplacement(grille):
                     if grille[len(grille)-1-k][j]!='*' and len(grille)-1-k+1<len(grille) and grille[len(grille)-1-k+1][j]=='*':
                         grille[len(grille)-1-k+1][j]=grille[len(grille)-1-k][j]
                         grille[len(grille)-1-k][j]='*'
-                        k+=1
+                        k-=1
                         flag=True
-
+        for i in range(len(grille)):
+            for j in range(len(grille[i])):
+                if grille[i][j]!='*' and i+1<len(grille) and grille[i+1][j]!='*' and grille[i][j]==grille[i+1][j]:
+                    grille[i+1][j]*=grille[i][j]
+                    grille[i][j]='*'
+        remplir(grille)
     print('\n\n')
     return grille
 
+def gameover(grille):
+    flag=True
+    (i,j)=(0,0)
+    while i<len(grille) and flag:
+        while j<len(grille[i]) and flag:
+            if grille[i][j]=='*':
+                flag=False
+            j+=1
+        i+=1
+    return flag
 
 
-grille=inittab()
-affichertab(grille)
-deplacement(grille)
-affichertab(grille)
+def Jeux ():
+    grille=inittab()
+    affichertab(grille)
+    flag=gameover(grille)
+    while flag==False:
+        affichertab(deplacement(grille))
+        flag=gameover(grille)
+
+Jeux()
